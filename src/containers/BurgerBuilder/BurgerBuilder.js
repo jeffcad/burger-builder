@@ -3,6 +3,7 @@ import Aux from '../../hoc/Auxiliary'
 import Burger from '../../components/Burger/Burger'
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
 
+const BASE_PRICE = 4.00
 const INGREDIENT_PRICES = {
   lettuce: 0.5,
   cheese: 0.4,
@@ -18,7 +19,12 @@ class BurgerBuilder extends Component {
       cheese: 0,
       meat: 0
     },
-    totalPrice: 4.0
+    totalPrice: BASE_PRICE,
+    purchasable: false
+  }
+
+  checkPurchasable(price) {
+    return price.toFixed(2) === BASE_PRICE.toFixed(2) ? false : true
   }
 
   addIngredientHandler = (type) => {
@@ -28,8 +34,9 @@ class BurgerBuilder extends Component {
     updatedIngredients[type] = updatedCount
     const priceAddition = INGREDIENT_PRICES[type]
     const oldPrice = this.state.totalPrice
-    const newPrice = oldPrice + priceAddition
-    this.setState({ ingredients: updatedIngredients, totalPrice: newPrice })
+    const updatedPrice = oldPrice + priceAddition
+    const updatedPurchasable = this.checkPurchasable(updatedPrice)
+    this.setState({ ingredients: updatedIngredients, totalPrice: updatedPrice, purchasable: updatedPurchasable })
   }
 
   removeIngredientHandler = (type) => {
@@ -40,9 +47,9 @@ class BurgerBuilder extends Component {
     updatedIngredients[type] = updatedCount
     const priceSubtraction = INGREDIENT_PRICES[type]
     const oldPrice = this.state.totalPrice
-    const newPrice = oldPrice - priceSubtraction
-    this.setState({ ingredients: updatedIngredients, totalPrice: newPrice })
-
+    const updatedPrice = oldPrice - priceSubtraction
+    const updatedPurchasable = this.checkPurchasable(updatedPrice)
+    this.setState({ ingredients: updatedIngredients, totalPrice: updatedPrice, purchasable: updatedPurchasable })
   }
 
   render() {
@@ -59,6 +66,7 @@ class BurgerBuilder extends Component {
         <BuildControls
           price={this.state.totalPrice}
           disabled={disabledInfo}
+          purchasable={this.state.purchasable}
           ingredientAdded={this.addIngredientHandler}
           ingredientRemoved={this.removeIngredientHandler}
         />
