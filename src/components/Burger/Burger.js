@@ -20,7 +20,7 @@ const Burger = (props) => {
   })
 
   if (middleIngredients.length === 0) {
-    middleIngredients = <h4>This is a sad burger. Please add some ingredients!</h4>
+    middleIngredients = <h4>Please add some ingredients!</h4>
   }
 
   return (
