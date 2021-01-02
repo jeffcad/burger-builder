@@ -7,6 +7,7 @@
   margin: auto;
   padding: 10px;
   background-color: #CF8F2E;
+  box-sizing: border-box;
 }
 
 .OrderButton {
