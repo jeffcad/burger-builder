@@ -12,12 +12,14 @@ const Burger = (props) => {
   //   })
 
   let middleIngredients = []
-  Object.entries(props.ingredients).forEach(entry => {
-    const [ingredientName, ingredientCount] = entry
-    for (let i = 1; i <= ingredientCount; i++) {
-      middleIngredients.push(<Ingredient key={ingredientName + i} type={ingredientName} />)
-    }
-  })
+  if (props.ingredients) {
+    Object.entries(props.ingredients).forEach(entry => {
+      const [ingredientName, ingredientCount] = entry
+      for (let i = 1; i <= ingredientCount; i++) {
+        middleIngredients.push(<Ingredient key={ingredientName + i} type={ingredientName} />)
+      }
+    })
+  }
 
   if (middleIngredients.length === 0) {
     middleIngredients = <h4>Please add some ingredients!</h4>
