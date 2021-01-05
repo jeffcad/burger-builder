@@ -4,20 +4,23 @@ import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSumm
 
 class Checkout extends Component {
 
-  state = {
-    ingredients: {
-      lettuce: 1,
-      bacon: 1,
-      cheese: 2,
-      meat: 2
-    }
+  checkoutCancelledHandler = () => {
+    this.props.history.goBack()
+  }
+
+  checkoutContinuedHandler = () => {
+    this.props.history.replace('/checkout/contact-data')
   }
 
   render() {
 
     return (
       <div>
-        <CheckoutSummary ingredients={this.state.ingredients} />
+        <CheckoutSummary
+          ingredients={this.props.location.state.ingredients}
+          checkoutCancelled={this.checkoutCancelledHandler}
+          checkoutContinued={this.checkoutContinuedHandler}
+        />
       </div>
     )
   }
