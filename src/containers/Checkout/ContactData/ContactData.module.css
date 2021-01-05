@@ -10,16 +10,6 @@
   font-size: 1.5rem;
 }
 
-.Input {
-  display: block;
-  margin: 10px auto;
-  padding: 10px;
-  width: 90%;
-  font-size: 1.2rem;
-  box-sizing: border-box;
-  border-radius: 5px;
-}
-
 @media (min-width: 600px) {
   .ContactData {
     width: 500px;
