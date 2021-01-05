@@ -9,16 +9,73 @@ import Input from '../../../components/UI/Input/Input'
 class ContactData extends Component {
 
   state = {
-    customer: {
-      name: '',
-      address: {
-        street: '',
-        city: '',
-        state: '',
-        postalCode: '',
-        country: ''
+    orderForm: {
+      name: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Name'
+        },
+        value: ''
       },
-      email: ''
+      street: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Street address'
+        },
+        value: ''
+      },
+      city: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'City / Town'
+        },
+        value: ''
+      },
+      state: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'State / Province'
+        },
+        value: ''
+      },
+      postalCode: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Postal Code / Zip code'
+        },
+        value: ''
+      },
+      country: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Country'
+        },
+        value: ''
+      },
+      email: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'email',
+          placeholder: 'Email address'
+        },
+        value: ''
+      },
+      deliveryMethod: {
+        elementType: 'select',
+        elementConfig: {
+          options: [
+            { value: 'take-out', displayValue: 'Take-out' },
+            { value: 'eat-in', displayValue: 'Eat-in' }
+          ]
+        },
+        value: ''
+      }
     },
     loading: false
   }
@@ -30,18 +87,6 @@ class ContactData extends Component {
     const order = {
       ingredients: this.props.ingredients,
       price: this.props.totalPrice?.toFixed(2),
-      customer: {
-        name: 'P. Sherman',
-        address: {
-          street: '42 Wallaby Way',
-          postalCode: '2000',
-          city: 'Sydney',
-          state: 'NSW',
-          country: 'Australia'
-        },
-        email: 'psherman@aquariumdentist.com'
-      },
-      deliveryMethod: 'take-out'
     }
     axios.post('/orders.json', order)
       .then(response => {
@@ -51,17 +96,29 @@ class ContactData extends Component {
       .catch(error => this.setState({ loading: false }))
   }
 
+  inputChangedHandler = (event, inputId) => {
+    const updatedOrderForm = { ...this.state.orderForm }
+    const updatedFormElement = { ...updatedOrderForm[inputId] }
+    updatedFormElement.value = event.target.value
+    updatedOrderForm[inputId] = updatedFormElement
+    this.setState({ orderForm: updatedOrderForm })
+  }
+
   render() {
 
     let form = (
       <form>
-        <Input inputtype="input" type="text" name="street" placeholder="Street address" />
-        <Input inputtype="input" type="text" name="city" placeholder="City / Town" />
-        <Input inputtype="input" type="text" name="name" placeholder="Name" />
-        <Input inputtype="input" type="text" name="state" placeholder="State / Province" />
-        <Input inputtype="input" type="text" name="postal" placeholder="Postal Code / ZIP" />
-        <Input inputtype="input" type="text" name="country" placeholder="Country" />
-        <Input inputtype="input" type="email" name="email" placeholder="Email address" />
+        {Object.keys(this.state.orderForm).map(key => {
+          return (
+            <Input
+              key={key}
+              elementType={this.state.orderForm[key].elementType}
+              elementConfig={this.state.orderForm[key].elementConfig}
+              value={this.state.orderForm[key].value}
+              changed={(event) => this.inputChangedHandler(event, key)}
+            />
+          )
+        })}
         <Button buttonType="Success" clicked={this.orderHandler}>ORDER</Button>
       </form>
     )
