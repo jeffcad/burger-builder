@@ -39,32 +39,6 @@ class ContactData extends Component {
         valid: false,
         touched: false
       },
-      city: {
-        elementType: 'input',
-        elementConfig: {
-          type: 'text',
-          placeholder: 'City / Town'
-        },
-        value: '',
-        validation: {
-          required: true
-        },
-        valid: false,
-        touched: false
-      },
-      state: {
-        elementType: 'input',
-        elementConfig: {
-          type: 'text',
-          placeholder: 'State / Province'
-        },
-        value: '',
-        validation: {
-          required: true
-        },
-        valid: false,
-        touched: false
-      },
       postal_code: {
         elementType: 'input',
         elementConfig: {
@@ -76,19 +50,6 @@ class ContactData extends Component {
           required: true,
           minLength: 4,
           maxLength: 6
-        },
-        valid: false,
-        touched: false
-      },
-      country: {
-        elementType: 'input',
-        elementConfig: {
-          type: 'text',
-          placeholder: 'Country'
-        },
-        value: '',
-        validation: {
-          required: true
         },
         valid: false,
         touched: false
