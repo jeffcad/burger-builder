@@ -1,4 +1,4 @@
-import * as actionTypes from './actions'
+import * as actionTypes from '../actions/actionTypes'
 
 const BASE_PRICE = 4.00
 const INGREDIENT_PRICES = {
@@ -9,14 +9,10 @@ const INGREDIENT_PRICES = {
 }
 
 const initialState = {
-  ingredients: {
-    lettuce: 0,
-    bacon: 0,
-    cheese: 0,
-    meat: 0
-  },
+  ingredients: null,
   totalPrice: BASE_PRICE,
-  purchasable: false
+  purchasable: false,
+  error: false
 }
 
 const reducer = (state = initialState, action) => {
@@ -41,6 +37,26 @@ const reducer = (state = initialState, action) => {
         },
         totalPrice: updatedPrice,
         purchasable: updatedPrice.toFixed(2) !== BASE_PRICE.toFixed(2)
+      }
+    case actionTypes.SET_INGREDIENTS:
+      return {
+        ...state,
+        // Setting like this to change the order of ingredients from
+        // alphabetical, which is how Firebase returns them
+        // otherwise could just use the line below
+        // ingredients: action.ingredients,
+        ingredients: {
+          lettuce: action.ingredients.lettuce,
+          bacon: action.ingredients.bacon,
+          cheese: action.ingredients.cheese,
+          meat: action.ingredients.meat
+        },
+        error: false
+      }
+    case actionTypes.FETCH_INGREDIENTS_FAILED:
+      return {
+        ...state,
+        error: true
       }
     default:
       return state
