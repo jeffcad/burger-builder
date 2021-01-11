@@ -47,7 +47,7 @@ const Input = (props) => {
       )
       break
     default:
-      console.log('Unknown element')
+      return null
   }
 
   return (
