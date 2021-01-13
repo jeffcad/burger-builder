@@ -14,11 +14,13 @@ export function BurgerBuilder(props) {
 
   const [purchasing, setPurchasing] = useState(false)
 
+  const { building, onInitIngredients } = props
+
   useEffect(() => {
-    if (!props.building) {
-      props.onInitIngredients()
+    if (!building) {
+      onInitIngredients()
     }
-  }, [])
+  }, [building, onInitIngredients])
 
   const purchaseHandler = () => {
     if (props.isAuthenticated) {
