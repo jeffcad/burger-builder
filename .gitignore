@@ -20,6 +20,8 @@
 no-github.js
 .eslintcache
 
+*firebase*
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
